@@ -4,14 +4,14 @@ import numpy as np
 import nibabel as nb
 
 # Load the covariate file
-df = pd.read_csv('pac/PAC2018_Covariates.csv')
+df = pd.read_csv('data/PAC2018_Covariates.csv')
 
 # Get NIfTIs
-niftis = sorted(glob('pac/nifti/*nii.gz'))
+niftis = sorted(glob('data/nifti/*nii.gz'))
 
 # Get atlas mask information
-mask = nb.load('01_HarvardOxford_mask_50p_TPM.nii.gz').get_data()
-with open('01_HarvardOxford_labels.txt', 'r') as f:
+mask = nb.load('01_prep_HarvardOxford_mask_50p_TPM.nii.gz').get_data()
+with open('01_prep_HarvardOxford_labels.txt', 'r') as f:
     labels = f.read().split('\n')[:-1]
 
 # Create array to store new 'global' features
@@ -58,4 +58,4 @@ features_atlas = np.array(features_atlas)
 for i, l in enumerate(labels):
     df[l] = features_atlas[:, i]
 
-df.to_csv('pac/PAC2018_Covariates_detailed.csv', index=False)
+df.to_csv('data/PAC2018_Covariates_detailed.csv', index=False)
